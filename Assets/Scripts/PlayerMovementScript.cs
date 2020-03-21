@@ -34,6 +34,9 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField]
     private AudioSource audioData;
 
+    [SerializeField]
+    private GameObject Prefab;
+
     private Vector3 velocity;
     private bool isGround;
 
@@ -49,10 +52,10 @@ public class PlayerMovementScript : MonoBehaviour
         //Checking for ground
         isGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-       
+
 
         //Checking if it should add gravity
-        if (isGround && velocity.y <0) 
+        if (isGround && velocity.y < 0)
         {
             velocity.y = -2f;
         }
@@ -78,6 +81,14 @@ public class PlayerMovementScript : MonoBehaviour
         {
             audioData.Play(0);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            Vector3 blockSpawnPoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y , gameObject.transform.position.z);
+            Instantiate(Prefab, blockSpawnPoint, Quaternion.identity);
+
+        }
+        else if (Input.GetButtonDown("Jump") && !isGround)
+        {
+            
+
         }
        
         //Gravity
